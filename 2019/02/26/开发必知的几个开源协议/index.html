@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="什么是软件许可协议？通俗来讲，许可协议是指用来授权其他人具有某种使用你的作品的权利。 依靠许可协议将你的作品对外开源或者对你的作品的各个方面逐一进行授权，是一个不错的方法(WordPress, Drupal 和许多其它的内容管理系统都是开源软件)。一旦对外开源，你将失去所有对你的作品的版权，别人也没有义务将你标注为作品的原创者或捐献者。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发必知的几个开源协议">
+<meta property="og:url" content="http://tosim.github.io/2019/02/26/开发必知的几个开源协议/index.html">
+<meta property="og:site_name" content="Tosim学习折腾笔记">
+<meta property="og:description" content="什么是软件许可协议？通俗来讲，许可协议是指用来授权其他人具有某种使用你的作品的权利。 依靠许可协议将你的作品对外开源或者对你的作品的各个方面逐一进行授权，是一个不错的方法(WordPress, Drupal 和许多其它的内容管理系统都是开源软件)。一旦对外开源，你将失去所有对你的作品的版权，别人也没有义务将你标注为作品的原创者或捐献者。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tosim.github.io/2019/02/26/开发必知的几个开源协议/开源协议对比图.jpg">
+<meta property="og:updated_time" content="2019-02-26T05:45:51.271Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开发必知的几个开源协议">
+<meta name="twitter:description" content="什么是软件许可协议？通俗来讲，许可协议是指用来授权其他人具有某种使用你的作品的权利。 依靠许可协议将你的作品对外开源或者对你的作品的各个方面逐一进行授权，是一个不错的方法(WordPress, Drupal 和许多其它的内容管理系统都是开源软件)。一旦对外开源，你将失去所有对你的作品的版权，别人也没有义务将你标注为作品的原创者或捐献者。">
+<meta name="twitter:image" content="http://tosim.github.io/2019/02/26/开发必知的几个开源协议/开源协议对比图.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tosim学习折腾笔记" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://tosim.github.io/2019/02/26/开发必知的几个开源协议/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>开发必知的几个开源协议 | Tosim学习折腾笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tosim学习折腾笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Day day up.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/26/开发必知的几个开源协议/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tosim">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tosim学习折腾笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">开发必知的几个开源协议
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-26 13:30:19 / 修改时间：13:45:51" itemprop="dateCreated datePublished" datetime="2019-02-26T13:30:19+08:00">2019-02-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/it知识/" itemprop="url" rel="index"><span itemprop="name">it知识</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是软件许可协议？"><a href="#什么是软件许可协议？" class="headerlink" title="什么是软件许可协议？"></a>什么是软件许可协议？</h2><p>通俗来讲，许可协议是指用来授权其他人具有某种使用你的作品的权利。</p>
+<p>依靠许可协议将你的作品对外开源或者对你的作品的各个方面逐一进行授权，是一个不错的方法(WordPress, Drupal 和许多其它的内容管理系统都是开源软件)。一旦对外开源，你将失去所有对你的作品的版权，别人也没有义务将你标注为作品的原创者或捐献者。<br><a id="more"></a><br>开源许可协议 使人们免去了研究那些专业的许可条款的麻烦，使人们更方便的对开源项目贡献出自己的代码。而且它还能保护你作为作品的原创作者，确保你至少拥有由于贡献参与而带来的署名荣誉。它还能用来阻止其他人企图声明对你的作品拥有所有权的行为。</p>
+<p>但是很多的软件作者和设计者都对各种不同的开源许可协议的内容和含义不甚了了。当你选择了某种开源许可协议时，你都放弃了哪些权力？在没有能明白各种开源协议的确切含义前，在不知道它们最适用于什么情况下时，软件开发者不可能在关于哪个许可协议最适合自己的软件的问题上做出准确的抉择。</p>
+<p>为此花了些时间，收集整理了5种开源协议，具体内容如下：</p>
+<h2 id="BSD开源协议（original-BSD-license、FreeBSD-license、Original-BSD-license）"><a href="#BSD开源协议（original-BSD-license、FreeBSD-license、Original-BSD-license）" class="headerlink" title="BSD开源协议（original BSD license、FreeBSD license、Original BSD license）"></a>BSD开源协议（original BSD license、FreeBSD license、Original BSD license）</h2><p>BSD开源协议是一个给于使用者很大自由的协议。基本上使用者可以”为所欲为”,可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。</p>
+<p>但”为所欲为”的前提当你发布使用了BSD协议的代码，或则以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：</p>
+<p>如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。<br>如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。<br>不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。<br>BSD 代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对 商业集成很友好的协议。而很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者二次开发。</p>
+<h2 id="Apache-Licence-2-0（Apache-License-Version-2-0、Apache-License-Version-1-1、Apache-License-Version-1-0）"><a href="#Apache-Licence-2-0（Apache-License-Version-2-0、Apache-License-Version-1-1、Apache-License-Version-1-0）" class="headerlink" title="Apache Licence 2.0（Apache License, Version 2.0、Apache License, Version 1.1、Apache License, Version 1.0）"></a>Apache Licence 2.0（Apache License, Version 2.0、Apache License, Version 1.1、Apache License, Version 1.0）</h2><p>Apache Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，同样鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再发布（作为开源或商业软件）。需要满足的条件也和BSD类似：</p>
+<p>需要给代码的用户一份Apache Licence<br>如果你修改了代码，需要再被修改的文件中说明。<br>在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。<br>如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。<br>Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。</p>
+<h2 id="GPL（GNU-General-Public-License）"><a href="#GPL（GNU-General-Public-License）" class="headerlink" title="GPL（GNU General Public License）"></a>GPL（GNU General Public License）</h2><p>我们很熟悉的Linux就是采用了GPL。GPL协议和BSD, Apache Licence等鼓励代码重用的许可很不一样。GPL的出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用，但不允许修改后和衍生的代码做为闭源的商业软件发布和销售。这也就是为什么我们能用免费的各种linux，包括商业公司的linux和linux上各种各样的由个人，组织，以及商 业软件公司开发的免费软件了。</p>
+<p>GPL协议的主要内容是只要在一个软件中使用(“使用”指类库引用，修改后的代码或者衍生代码)GPL 协议的产品，则该软件产品必须也采用GPL协议，既必须也是开源和免费。这就是所谓的”传染性”。GPL协议的产品作为一个单独的产品使用没有任何问题，还可以享受免费的优势。</p>
+<p>由于GPL严格要求使用了GPL类库的软件产品必须使用GPL协议，对于使用GPL协议的开源代码，商业软件或者对代码有保密要求的部门就不适合集成/采用作为类库和二次开发的基础。</p>
+<p>其它细节如再发布的时候需要伴随GPL协议等和BSD/Apache等类似。</p>
+<h2 id="LGPL（GNU-Lesser-General-Public-License）"><a href="#LGPL（GNU-Lesser-General-Public-License）" class="headerlink" title="LGPL（GNU Lesser General Public License）"></a>LGPL（GNU Lesser General Public License）</h2><p>LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求任何使用/修改/衍生之GPL类库的的软件必须采用GPL协议不同。LGPL 允许商业软件通过类库引用(link)方式使用LGPL类库而不需要开源商业软件的代码。这使得采用LGPL协议的开源代码可以被商业软件作为类库引用并 发布和销售。</p>
+<p>但是如果修改LGPL协议的代码或者衍生，则所有修改的代码，涉及修改部分的额外代码和衍生的代码都必须采用LGPL协议。因此LGPL协议的开源 代码很适合作为第三方类库被商业软件引用，但不适合希望以LGPL协议代码为基础，通过修改和衍生的方式做二次开发的商业软件采用。</p>
+<p>GPL/LGPL都保障原作者的知识产权，避免有人利用开源代码复制并开发类似的产品</p>
+<h2 id="MIT（MIT）"><a href="#MIT（MIT）" class="headerlink" title="MIT（MIT）"></a>MIT（MIT）</h2><p>MIT是和BSD一样宽范的许可协议,作者只想保留版权,而无任何其他了限制.也就是说,你必须在你的发行版里包含原许可协议的声明,无论你是以二进制发布的还是以源代码发布的.</p>
+<h2 id="开源协议对比图"><a href="#开源协议对比图" class="headerlink" title="开源协议对比图"></a>开源协议对比图</h2><p>认识了以上5种协议之后，再来看看oschina制作的针对目前主流开源协议的对比图：<br><!-- ![](./开发必知的几个开源协议/开源协议对比图.jpg)--><br><img src="/2019/02/26/开发必知的几个开源协议/开源协议对比图.jpg"></p>
+<h2 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h2><p><a href="http://baike.baidu.com/view/1373538.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/1373538.htm</a><br><a href="http://www.awflasher.com/blog/archives/939" target="_blank" rel="noopener">http://www.awflasher.com/blog/archives/939</a><br><a href="http://www.aqee.net/a-short-guide-to-open-source-and-similar-licenses/" target="_blank" rel="noopener">http://www.aqee.net/a-short-guide-to-open-source-and-similar-licenses/</a><br><a href="http://www.oschina.net/news/27273/main-os-license-comparison" target="_blank" rel="noopener">http://www.oschina.net/news/27273/main-os-license-comparison</a><br><a href="https://www.zhihu.com/question/19568896" target="_blank" rel="noopener">https://www.zhihu.com/question/19568896</a></p>
+<p>转载自<a href="http://jokerliang.com/developers-will-know-5-kinds-of-open-source-licenses.html" target="_blank" rel="noopener">http://jokerliang.com/developers-will-know-5-kinds-of-open-source-licenses.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/26/dubbo异常过滤/" rel="next" title="dubbo异常过滤">
+                <i class="fa fa-chevron-left"></i> dubbo异常过滤
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/28/log4j2-xml生产级配置/" rel="prev" title="log4j2.xml生产级配置">
+                log4j2.xml生产级配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tosim</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是软件许可协议？"><span class="nav-number">1.</span> <span class="nav-text">什么是软件许可协议？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BSD开源协议（original-BSD-license、FreeBSD-license、Original-BSD-license）"><span class="nav-number">2.</span> <span class="nav-text">BSD开源协议（original BSD license、FreeBSD license、Original BSD license）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Licence-2-0（Apache-License-Version-2-0、Apache-License-Version-1-1、Apache-License-Version-1-0）"><span class="nav-number">3.</span> <span class="nav-text">Apache Licence 2.0（Apache License, Version 2.0、Apache License, Version 1.1、Apache License, Version 1.0）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPL（GNU-General-Public-License）"><span class="nav-number">4.</span> <span class="nav-text">GPL（GNU General Public License）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LGPL（GNU-Lesser-General-Public-License）"><span class="nav-number">5.</span> <span class="nav-text">LGPL（GNU Lesser General Public License）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIT（MIT）"><span class="nav-number">6.</span> <span class="nav-text">MIT（MIT）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开源协议对比图"><span class="nav-number">7.</span> <span class="nav-text">开源协议对比图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考内容"><span class="nav-number">8.</span> <span class="nav-text">参考内容</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tosim</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。">
+  <meta name="description" content="dubbo异常过滤dubbo的异常处理和过滤器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存屏障和CPU缓存">
-<meta property="og:url" content="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/index.html">
+<meta property="og:title" content="dubbo异常过滤">
+<meta property="og:url" content="http://tosim.github.io/2019/02/26/dubbo异常过滤/index.html">
 <meta property="og:site_name" content="Tosim学习折腾笔记">
-<meta property="og:description" content="java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。">
+<meta property="og:description" content="dubbo异常过滤dubbo的异常处理和过滤器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-01T06:06:36.498Z">
+<meta property="og:updated_time" content="2019-02-26T04:24:23.020Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存屏障和CPU缓存">
-<meta name="twitter:description" content="java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。">
+<meta name="twitter:title" content="dubbo异常过滤">
+<meta name="twitter:description" content="dubbo异常过滤dubbo的异常处理和过滤器">
 
 
 
@@ -115,7 +115,7 @@
 
 
 
-  <link rel="canonical" href="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/">
+  <link rel="canonical" href="http://tosim.github.io/2019/02/26/dubbo异常过滤/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>内存屏障和CPU缓存 | Tosim学习折腾笔记</title>
+  <title>dubbo异常过滤 | Tosim学习折腾笔记</title>
   
 
 
@@ -345,7 +345,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/26/dubbo异常过滤/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tosim">
@@ -362,7 +362,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">内存屏障和CPU缓存
+          <h1 class="post-title" itemprop="name headline">dubbo异常过滤
 
               
             
@@ -388,24 +388,12 @@
                 
               
 
-              <time title="创建时间：2019-02-25 22:19:36" itemprop="dateCreated datePublished" datetime="2019-02-25T22:19:36+08:00">2019-02-25</time>
+              <time title="创建时间：2019-02-26 12:23:05 / 修改时间：12:24:23" itemprop="dateCreated datePublished" datetime="2019-02-26T12:23:05+08:00">2019-02-26</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-01 14:06:36" itemprop="dateModified" datetime="2019-03-01T14:06:36+08:00">2019-03-01</time>
               
             
           </span>
@@ -422,7 +410,14 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/分布式/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/分布式/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
 
                 
                 
@@ -457,31 +452,15 @@
       
 
       
-        <p>java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。</p>
-<a id="more"></a>
-<h2 id="CPU缓存"><a href="#CPU缓存" class="headerlink" title="CPU缓存"></a>CPU缓存</h2><p>L1 32-4096kb<br>L2<br>基本上每个CPU上都有L1， L2</p>
-<p>L3共享缓存</p>
-<h2 id="缓存同步协议"><a href="#缓存同步协议" class="headerlink" title="缓存同步协议"></a>缓存同步协议</h2><p>MESI</p>
-<ul>
-<li>修改态</li>
-<li>专有态</li>
-<li>共享态</li>
-<li>无效态</li>
-</ul>
-<p>多处理器时，单个CPU对缓存数据改动时，需要通知其他CPU</p>
-<p>volatile即当单CPU修改时，将其他CPU缓存对应数据的缓存设置为无效态，当其他CPU读此数据时，重新从主存读取。</p>
-<h2 id="运行时指令重排"><a href="#运行时指令重排" class="headerlink" title="运行时指令重排"></a>运行时指令重排</h2><p>单线程时，无依赖关系的代码可能会重新排序，但是保证单线程执行结果不变。遵循as-if-serial。</p>
-<h2 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h2><ol>
-<li>写内存屏障<br>在指令后插入Store Barrier， 修改缓存后，强制写入主存，让其他CPU可见。<br>即保证可见性时， 修改数据后更新到主存，并将其他CPU对应的缓存设置为无效态。</li>
-<li>读内存屏障<br>在指令前插入Load Barrier， 读数据前，强制从主存读取。<br>即保证可见性时， 读取数据前，如果缓存中为无效态，则从主存读取。</li>
+        <h1 id="dubbo异常过滤"><a href="#dubbo异常过滤" class="headerlink" title="dubbo异常过滤"></a>dubbo异常过滤</h1><p>dubbo的异常处理和过滤器<br><a id="more"></a></p>
+<h2 id="com-alibaba-dubbo-rpc-filter-ExceptionFilter"><a href="#com-alibaba-dubbo-rpc-filter-ExceptionFilter" class="headerlink" title="com.alibaba.dubbo.rpc.filter.ExceptionFilter"></a>com.alibaba.dubbo.rpc.filter.ExceptionFilter</h2><ol>
+<li>checked异常</li>
+<li>在方法签名中的异常</li>
+<li>与api接口同jar包的异常</li>
+<li>jdk异常</li>
+<li>dubbo的异常</li>
 </ol>
-<h2 id="保证可见性的几个场景"><a href="#保证可见性的几个场景" class="headerlink" title="保证可见性的几个场景"></a>保证可见性的几个场景</h2><p>什么是保证可见性？<br>多个线程读取同一数据时，保证读到的是最新的而不是其他线程修改前的数据。</p>
-<ol>
-<li>数据用volatile修饰</li>
-<li>synchronize，JVM保证了同步代码块中数据的可见性</li>
-<li>Lock（ReentertLock等），获得锁后保证了数据的可见性</li>
-</ol>
-<p>可以从运行时编译代码中看到类似实现可见性的代码（具体是什么忘记了…，待补充）</p>
+<p>出现以上情况的异常，直接返回result，在客户端会出现对应的异常。<br>如果不是以上异常，dubbo服务端则会将异常包装为一个RuntimeException抛给客户端。</p>
 
       
     </div>
@@ -512,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/25/线程终止/" rel="next" title="线程终止">
-                <i class="fa fa-chevron-left"></i> 线程终止
+              <a href="/2019/02/25/内存屏障和CPU缓存/" rel="next" title="内存屏障和CPU缓存">
+                <i class="fa fa-chevron-left"></i> 内存屏障和CPU缓存
               </a>
             
           </div>
@@ -522,8 +501,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/26/dubbo异常过滤/" rel="prev" title="dubbo异常过滤">
-                dubbo异常过滤 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/26/开发必知的几个开源协议/" rel="prev" title="开发必知的几个开源协议">
+                开发必知的几个开源协议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -676,7 +655,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU缓存"><span class="nav-number">1.</span> <span class="nav-text">CPU缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存同步协议"><span class="nav-number">2.</span> <span class="nav-text">缓存同步协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时指令重排"><span class="nav-number">3.</span> <span class="nav-text">运行时指令重排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存屏障"><span class="nav-number">4.</span> <span class="nav-text">内存屏障</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保证可见性的几个场景"><span class="nav-number">5.</span> <span class="nav-text">保证可见性的几个场景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dubbo异常过滤"><span class="nav-number">1.</span> <span class="nav-text">dubbo异常过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#com-alibaba-dubbo-rpc-filter-ExceptionFilter"><span class="nav-number">1.1.</span> <span class="nav-text">com.alibaba.dubbo.rpc.filter.ExceptionFilter</span></a></li></ol></li></ol></div>
             
 
           </div>

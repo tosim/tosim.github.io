@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="数据库基本概念，数据结构，常用引擎，索引注意点，事务并发问题和并发控制的实现，加锁机制等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库面试要点">
+<meta property="og:url" content="http://tosim.github.io/2019/03/04/数据库面试要点/index.html">
+<meta property="og:site_name" content="Tosim学习折腾笔记">
+<meta property="og:description" content="数据库基本概念，数据结构，常用引擎，索引注意点，事务并发问题和并发控制的实现，加锁机制等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tosim.github.io/2019/03/04/数据库面试要点/死锁1.jpg">
+<meta property="og:image" content="http://tosim.github.io/2019/03/04/数据库面试要点/死锁2.jpg">
+<meta property="og:updated_time" content="2019-03-04T07:00:13.261Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库面试要点">
+<meta name="twitter:description" content="数据库基本概念，数据结构，常用引擎，索引注意点，事务并发问题和并发控制的实现，加锁机制等。">
+<meta name="twitter:image" content="http://tosim.github.io/2019/03/04/数据库面试要点/死锁1.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tosim学习折腾笔记" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://tosim.github.io/2019/03/04/数据库面试要点/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>数据库面试要点 | Tosim学习折腾笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tosim学习折腾笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Day day up.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/04/数据库面试要点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tosim">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tosim学习折腾笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库面试要点
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 14:49:39 / 修改时间：15:00:13" itemprop="dateCreated datePublished" datetime="2019-03-04T14:49:39+08:00">2019-03-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数据库基本概念，数据结构，常用引擎，索引注意点，事务并发问题和并发控制的实现，加锁机制等。<br><a id="more"></a></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="三级模式"><a href="#三级模式" class="headerlink" title="三级模式"></a>三级模式</h3><ol>
+<li>外模式（数据库用户的数据视图）</li>
+<li>模式（全局数据视图）</li>
+<li>内模式（物理存储方式）</li>
+</ol>
+<h3 id="两级映像"><a href="#两级映像" class="headerlink" title="两级映像"></a>两级映像</h3><ol>
+<li>外模式/模式，保证逻辑独立性</li>
+<li>模式/内模式，保证物理独立性</li>
+</ol>
+<h3 id="三范式"><a href="#三范式" class="headerlink" title="三范式"></a>三范式</h3><ol>
+<li>每一列都是原子的，不可再分的</li>
+<li>保证第一范式，不存在部分依赖</li>
+<li>保证第二范式，不存在传递依赖</li>
+</ol>
+<h3 id="MySQL的数据库引擎"><a href="#MySQL的数据库引擎" class="headerlink" title="MySQL的数据库引擎"></a>MySQL的数据库引擎</h3><ol>
+<li>ISAM：读取快，不支持事务，外键</li>
+<li>MyISAM：基于ISAM，支持表级锁</li>
+<li>archive： 提供压缩功能，适合大数据量的历史数据，插入快，无索引，查询慢</li>
+<li>blackhole：用作日志记录</li>
+<li>heap：数据存在内存，每个表对应一个磁盘文件，表结构存在磁盘</li>
+<li>csv：基于普通文本，每个数据占一个文本行</li>
+<li>performance schame：用于收集数据库服务器的参数</li>
+<li>InnoDB：提供ACID事务（原子性，一致性，隔离性，持久性），多版本并发控制，支持索引，5.5之后的默认引擎。</li>
+</ol>
+<h3 id="死锁的四个必要条件"><a href="#死锁的四个必要条件" class="headerlink" title="死锁的四个必要条件"></a>死锁的四个必要条件</h3><ol>
+<li>互斥</li>
+<li>不可剥夺</li>
+<li>请求与保持</li>
+<li>环路等待</li>
+</ol>
+<h3 id="显示加锁"><a href="#显示加锁" class="headerlink" title="显示加锁"></a>显示加锁</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 显示加行级锁</span><br><span class="line">select ... lock in share mode(加S锁)</span><br><span class="line">select ... for update(加X锁)</span><br><span class="line"></span><br><span class="line">// 显示加表级锁</span><br><span class="line">SET AUTOCOMMIT=0;</span><br><span class="line">LOCK TABLES t1 WRITE, t2 READ, ...;</span><br><span class="line">[do something with tables t1 and here];</span><br><span class="line">COMMIT;</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+<h2 id="索引数据结构"><a href="#索引数据结构" class="headerlink" title="索引数据结构"></a>索引数据结构</h2><h3 id="B树和B-树"><a href="#B树和B-树" class="headerlink" title="B树和B+树"></a>B树和B+树</h3><h4 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h4><ol>
+<li>多路搜索树,每个节点包含n个key，data和n+1个指针指向下一层的节点</li>
+</ol>
+<h4 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h4><ol>
+<li>多路搜索树，每个节点包含n个key和n个指向下一层个节点的指针和一个指向兄弟节点的指针</li>
+<li>非叶子节点不存储数据，叶子节点存储数据并包含一个指向兄弟节点的指针。</li>
+<li>每个节点大小为一个物理存储页的大小，linux下一般为4k，减少了磁盘I/O</li>
+</ol>
+<h4 id="B-树快的原因"><a href="#B-树快的原因" class="headerlink" title="B+树快的原因"></a>B+树快的原因</h4><ol>
+<li>多路搜索树，查询复杂度为logm(n)</li>
+<li>每个节点大小为一个物理存储页的大小，linux下一般为4k，减少了磁盘I/O</li>
+<li>每个非叶子节点只存储key而不存储实际数据，搜索变得稳定。</li>
+<li>每个节点有指向兄弟节点的指针，对于范围查找变得更快。</li>
+</ol>
+<h4 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h4><h5 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h5><p>逻辑结构和物理结构一致，叶子节点存储的就是数据</p>
+<h5 id="非聚簇索引"><a href="#非聚簇索引" class="headerlink" title="非聚簇索引"></a>非聚簇索引</h5><p>逻辑结构和物理结构不一致，叶子节点存储的不是直接的数据。如InnoDB的二级索引的叶子节点为主键值，MyISAM二级索引叶子节点指向的为数据物理存储地址的指针</p>
+<h2 id="索引分类和注意点"><a href="#索引分类和注意点" class="headerlink" title="索引分类和注意点"></a>索引分类和注意点</h2><h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><p>索引分类：主键索引，普通索引，唯一索引，全文索引，组合索引</p>
+<h3 id="使用索引注意点"><a href="#使用索引注意点" class="headerlink" title="使用索引注意点"></a>使用索引注意点</h3><ul>
+<li>索引字段默认值不要设置null，索引不会包含null值</li>
+<li>MySQL查询时只会使用一种索引</li>
+<li>有索引的列参与计算时，不会走此索引，尽量直接使用索引列而不要使索引列参与计算</li>
+<li>组合索引为最左匹配，如建立（a, b, c）索引时会同时建立（a）, (a, b), (a, b, c)</li>
+<li>只有通过索引条件检索数据，InnoDB才会使用行级锁，否则，InnoDB将使用表锁！因为InnoDB的行锁是通过索引上的索引项来实现的。</li>
+<li>当查询的列为组合索引中的字段，则此二级索引不需要回表操作，直接返回数据。因为组合索引上保存了组合索引包含的字段信息。</li>
+</ul>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h3><ol>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>串行化</li>
+</ol>
+<h3 id="事务并发带来的问题"><a href="#事务并发带来的问题" class="headerlink" title="事务并发带来的问题"></a>事务并发带来的问题</h3><ol>
+<li>丢失修改（事务B的修改覆盖了未完成事务A的修改）</li>
+<li>读脏数据（事务B读取了未完成事务A的未提交更新）</li>
+<li>不可重复读</li>
+</ol>
+<ul>
+<li>事务A两次用相同的sql读取数据，其间事务B修改了数据</li>
+<li>事务A两次用相同的sql读取数据，其间事务B添加或删除了符合sql的数据（幻读）<br>标准的InnoDB的可重复读并未解决幻读的问题，幻读是InnoDB的MVCC解决的。</li>
+</ul>
+<h3 id="LBCC-Lock-Based-Concurrent-Controll，基于锁的并发控制，封锁协议"><a href="#LBCC-Lock-Based-Concurrent-Controll，基于锁的并发控制，封锁协议" class="headerlink" title="LBCC(Lock-Based Concurrent Controll，基于锁的并发控制，封锁协议)"></a>LBCC(Lock-Based Concurrent Controll，基于锁的并发控制，封锁协议)</h3><h4 id="一级封锁协议"><a href="#一级封锁协议" class="headerlink" title="一级封锁协议"></a>一级封锁协议</h4><p>写数据前加X锁，事务结束后释放</p>
+<h4 id="二级封锁协议"><a href="#二级封锁协议" class="headerlink" title="二级封锁协议"></a>二级封锁协议</h4><p>满足一级封锁协议，读数据前加S锁，读完释放</p>
+<h4 id="三级封锁协议"><a href="#三级封锁协议" class="headerlink" title="三级封锁协议"></a>三级封锁协议</h4><p>满足一级封锁协议，读数据前加S锁，事务结束后释放</p>
+<h3 id="MVCC-Multi-Version-Concurrent-Controller，多版本并发控制"><a href="#MVCC-Multi-Version-Concurrent-Controller，多版本并发控制" class="headerlink" title="MVCC(Multi-Version Concurrent Controller，多版本并发控制)"></a>MVCC(Multi-Version Concurrent Controller，多版本并发控制)</h3><h4 id="快照读和当前读"><a href="#快照读和当前读" class="headerlink" title="快照读和当前读"></a>快照读和当前读</h4><ul>
+<li><p>快照读：仅读取记录的可见版本，可能是历史版本。不会对返回的数据集加锁<br>简单的查询都属于快照读</p>
+</li>
+<li><p>当前读：读取记录的最新版本。并对返回的数据集一行一行得加锁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * from table where ? lock in share mode; （加S锁）</span><br><span class="line">select * from table where ? for update; （加X锁，下同）</span><br><span class="line">insert, update, delete操作</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h4><p>当两个（或以上）Session以不同的顺序对同一(或若干)数据行加锁，则可能出现死锁。<br><img src="/2019/03/04/数据库面试要点/死锁1.jpg"><br><img src="/2019/03/04/数据库面试要点/死锁2.jpg"></p>
+<h4 id="InnoDB的MVCC实现机制"><a href="#InnoDB的MVCC实现机制" class="headerlink" title="InnoDB的MVCC实现机制"></a>InnoDB的MVCC实现机制</h4><h5 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h5><p>InnoDB的MVCC，通过在每行数据后面保存两个隐藏的列，创建版本号和删除版本号来实现。每开始一个新的事务，系统版本号就会递增1。MVCC只在RC（读已提交）和RR（可重复读）两个隔离级别工作，另外两个隔离界别与MVCC不兼容。</p>
+<h5 id="MVCC实现Repeatable-Read-（可重复读）的隔离级别"><a href="#MVCC实现Repeatable-Read-（可重复读）的隔离级别" class="headerlink" title="MVCC实现Repeatable Read （可重复读）的隔离级别"></a>MVCC实现Repeatable Read （可重复读）的隔离级别</h5><ol>
+<li>select：create_id &lt; current_id &lt; delete_id</li>
+<li>insert: create_id = current_id</li>
+<li>delete: delete_id = current_id</li>
+<li>update: insert + delete, 插入一条create_id = current_id的记录，将原记录delete_id = current_id</li>
+</ol>
+<p>InnoDB后台运行线程，删除delete_id &lt; current_id的记录，称为purge操作。</p>
+<h5 id="MVCC中RC和RR隔离级别的区别"><a href="#MVCC中RC和RR隔离级别的区别" class="headerlink" title="MVCC中RC和RR隔离级别的区别"></a>MVCC中RC和RR隔离级别的区别</h5><p>在RR隔离级别下，事务中的普通读取都是快照读，即别的事务修改的数据在此事务中读不到<br>在RC隔离级别下，事务中的读取总是当前读，即会产生不可重复读的问题</p>
+<h5 id="MVCC加锁细节"><a href="#MVCC加锁细节" class="headerlink" title="MVCC加锁细节"></a>MVCC加锁细节</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from t1 where key=10</span><br></pre></td></tr></table></figure>
+<p>RC（读已提交）隔离级别下</p>
+<ul>
+<li>如果key为主键索引，在主键索引上加x锁</li>
+<li>如果key为唯一索引，在唯一索引上加x锁</li>
+<li>如果key为二级非唯一索引，在所有对应的索引上加x锁</li>
+<li>如果key没有索引，则会对所有数据加X锁，但如果不符合查询条件，会马上释放X锁</li>
+</ul>
+<p>RR（可重复读）隔离级别下<br>为了不出现幻读，在第一条符合条件的数据和最后一条符合条件的数据两端加上GPA锁，不允许在此前后插入数据。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/01/synchroniezd锁优化/" rel="next" title="synchroniezd锁优化">
+                <i class="fa fa-chevron-left"></i> synchroniezd锁优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tosim</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级模式"><span class="nav-number">1.1.</span> <span class="nav-text">三级模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两级映像"><span class="nav-number">1.2.</span> <span class="nav-text">两级映像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三范式"><span class="nav-number">1.3.</span> <span class="nav-text">三范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL的数据库引擎"><span class="nav-number">1.4.</span> <span class="nav-text">MySQL的数据库引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的四个必要条件"><span class="nav-number">1.5.</span> <span class="nav-text">死锁的四个必要条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示加锁"><span class="nav-number">1.6.</span> <span class="nav-text">显示加锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引数据结构"><span class="nav-number">2.</span> <span class="nav-text">索引数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B树和B-树"><span class="nav-number">2.1.</span> <span class="nav-text">B树和B+树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B树"><span class="nav-number">2.1.1.</span> <span class="nav-text">B树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-树"><span class="nav-number">2.1.2.</span> <span class="nav-text">B+树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-树快的原因"><span class="nav-number">2.1.3.</span> <span class="nav-text">B+树快的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚簇索引和非聚簇索引"><span class="nav-number">2.1.4.</span> <span class="nav-text">聚簇索引和非聚簇索引</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#聚簇索引"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">聚簇索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非聚簇索引"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">非聚簇索引</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类和注意点"><span class="nav-number">3.</span> <span class="nav-text">索引分类和注意点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引分类"><span class="nav-number">3.1.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用索引注意点"><span class="nav-number">3.2.</span> <span class="nav-text">使用索引注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">4.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的隔离级别"><span class="nav-number">4.1.</span> <span class="nav-text">事务的隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务并发带来的问题"><span class="nav-number">4.2.</span> <span class="nav-text">事务并发带来的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LBCC-Lock-Based-Concurrent-Controll，基于锁的并发控制，封锁协议"><span class="nav-number">4.3.</span> <span class="nav-text">LBCC(Lock-Based Concurrent Controll，基于锁的并发控制，封锁协议)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一级封锁协议"><span class="nav-number">4.3.1.</span> <span class="nav-text">一级封锁协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二级封锁协议"><span class="nav-number">4.3.2.</span> <span class="nav-text">二级封锁协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三级封锁协议"><span class="nav-number">4.3.3.</span> <span class="nav-text">三级封锁协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVCC-Multi-Version-Concurrent-Controller，多版本并发控制"><span class="nav-number">4.4.</span> <span class="nav-text">MVCC(Multi-Version Concurrent Controller，多版本并发控制)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快照读和当前读"><span class="nav-number">4.4.1.</span> <span class="nav-text">快照读和当前读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁"><span class="nav-number">4.4.2.</span> <span class="nav-text">死锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InnoDB的MVCC实现机制"><span class="nav-number">4.4.3.</span> <span class="nav-text">InnoDB的MVCC实现机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#概括"><span class="nav-number">4.4.3.1.</span> <span class="nav-text">概括</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MVCC实现Repeatable-Read-（可重复读）的隔离级别"><span class="nav-number">4.4.3.2.</span> <span class="nav-text">MVCC实现Repeatable Read （可重复读）的隔离级别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MVCC中RC和RR隔离级别的区别"><span class="nav-number">4.4.3.3.</span> <span class="nav-text">MVCC中RC和RR隔离级别的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MVCC加锁细节"><span class="nav-number">4.4.3.4.</span> <span class="nav-text">MVCC加锁细节</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tosim</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

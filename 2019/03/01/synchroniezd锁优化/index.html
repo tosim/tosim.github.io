@@ -96,17 +96,19 @@
 
 
 
-  <meta name="description" content="java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。">
+  <meta name="description" content="1.6之后对synchronized做了优化，一个锁有不同阶段，获取的方式在底层不一样.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存屏障和CPU缓存">
-<meta property="og:url" content="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/index.html">
+<meta property="og:title" content="synchroniezd锁优化">
+<meta property="og:url" content="http://tosim.github.io/2019/03/01/synchroniezd锁优化/index.html">
 <meta property="og:site_name" content="Tosim学习折腾笔记">
-<meta property="og:description" content="java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。">
+<meta property="og:description" content="1.6之后对synchronized做了优化，一个锁有不同阶段，获取的方式在底层不一样.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-01T06:06:36.498Z">
+<meta property="og:image" content="http://tosim.github.io/2019/03/01/synchroniezd锁优化/偏向锁到重量级锁.png">
+<meta property="og:updated_time" content="2019-03-01T06:54:33.072Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存屏障和CPU缓存">
-<meta name="twitter:description" content="java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。">
+<meta name="twitter:title" content="synchroniezd锁优化">
+<meta name="twitter:description" content="1.6之后对synchronized做了优化，一个锁有不同阶段，获取的方式在底层不一样.">
+<meta name="twitter:image" content="http://tosim.github.io/2019/03/01/synchroniezd锁优化/偏向锁到重量级锁.png">
 
 
 
@@ -115,7 +117,7 @@
 
 
 
-  <link rel="canonical" href="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/">
+  <link rel="canonical" href="http://tosim.github.io/2019/03/01/synchroniezd锁优化/">
 
 
 
@@ -125,7 +127,7 @@
   };
 </script>
 
-  <title>内存屏障和CPU缓存 | Tosim学习折腾笔记</title>
+  <title>synchroniezd锁优化 | Tosim学习折腾笔记</title>
   
 
 
@@ -345,7 +347,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/01/synchroniezd锁优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tosim">
@@ -362,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">内存屏障和CPU缓存
+          <h1 class="post-title" itemprop="name headline">synchroniezd锁优化
 
               
             
@@ -388,24 +390,12 @@
                 
               
 
-              <time title="创建时间：2019-02-25 22:19:36" itemprop="dateCreated datePublished" datetime="2019-02-25T22:19:36+08:00">2019-02-25</time>
+              <time title="创建时间：2019-03-01 14:23:14 / 修改时间：14:54:33" itemprop="dateCreated datePublished" datetime="2019-03-01T14:23:14+08:00">2019-03-01</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-01 14:06:36" itemprop="dateModified" datetime="2019-03-01T14:06:36+08:00">2019-03-01</time>
               
             
           </span>
@@ -422,7 +412,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/jvm虚拟机/" itemprop="url" rel="index"><span itemprop="name">jvm虚拟机</span></a></span>
 
                 
                 
@@ -457,31 +447,22 @@
       
 
       
-        <p>java内存屏障和CPU缓存, 缓存同步协议，内存可见性和指令重排序（as-if-serial原则）。</p>
-<a id="more"></a>
-<h2 id="CPU缓存"><a href="#CPU缓存" class="headerlink" title="CPU缓存"></a>CPU缓存</h2><p>L1 32-4096kb<br>L2<br>基本上每个CPU上都有L1， L2</p>
-<p>L3共享缓存</p>
-<h2 id="缓存同步协议"><a href="#缓存同步协议" class="headerlink" title="缓存同步协议"></a>缓存同步协议</h2><p>MESI</p>
-<ul>
-<li>修改态</li>
-<li>专有态</li>
-<li>共享态</li>
-<li>无效态</li>
-</ul>
-<p>多处理器时，单个CPU对缓存数据改动时，需要通知其他CPU</p>
-<p>volatile即当单CPU修改时，将其他CPU缓存对应数据的缓存设置为无效态，当其他CPU读此数据时，重新从主存读取。</p>
-<h2 id="运行时指令重排"><a href="#运行时指令重排" class="headerlink" title="运行时指令重排"></a>运行时指令重排</h2><p>单线程时，无依赖关系的代码可能会重新排序，但是保证单线程执行结果不变。遵循as-if-serial。</p>
-<h2 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h2><ol>
-<li>写内存屏障<br>在指令后插入Store Barrier， 修改缓存后，强制写入主存，让其他CPU可见。<br>即保证可见性时， 修改数据后更新到主存，并将其他CPU对应的缓存设置为无效态。</li>
-<li>读内存屏障<br>在指令前插入Load Barrier， 读数据前，强制从主存读取。<br>即保证可见性时， 读取数据前，如果缓存中为无效态，则从主存读取。</li>
-</ol>
-<h2 id="保证可见性的几个场景"><a href="#保证可见性的几个场景" class="headerlink" title="保证可见性的几个场景"></a>保证可见性的几个场景</h2><p>什么是保证可见性？<br>多个线程读取同一数据时，保证读到的是最新的而不是其他线程修改前的数据。</p>
+        <p>1.6之后对synchronized做了优化，一个锁有不同阶段，获取的方式在底层不一样.<br><a id="more"></a></p>
+<h2 id="mark-word"><a href="#mark-word" class="headerlink" title="mark word"></a>mark word</h2><p>每个java对象在堆中都有一个mark work标志，在不同阶段，其格式和内容都不一样</p>
+<h2 id="synchronized从偏向锁到重量级锁"><a href="#synchronized从偏向锁到重量级锁" class="headerlink" title="synchronized从偏向锁到重量级锁"></a>synchronized从偏向锁到重量级锁</h2><img src="/2019/03/01/synchroniezd锁优化/偏向锁到重量级锁.png">
 <ol>
-<li>数据用volatile修饰</li>
-<li>synchronize，JVM保证了同步代码块中数据的可见性</li>
-<li>Lock（ReentertLock等），获得锁后保证了数据的可见性</li>
+<li><p>偏向锁<br>本质就是无锁，在mark word中标记当前获取锁的线程id，若没有其他线程争抢，则此线程获取锁时直接获得。出现争抢后就没用了。</p>
+</li>
+<li><p>自旋锁（轻量级锁）<br>当出现锁的争抢时，通过cas修改mark word争抢锁，当自旋次数到达一定次数仍未抢到锁，则升级为重量级锁</p>
+</li>
+<li><p>重量级锁-对象监视器（monitor）</p>
+</li>
 </ol>
-<p>可以从运行时编译代码中看到类似实现可见性的代码（具体是什么忘记了…，待补充）</p>
+<ul>
+<li>_entryList(多个争抢线程)</li>
+<li>_owner（抢到锁的线程）</li>
+<li>waitSet（调用wait等待的线程）</li>
+</ul>
 
       
     </div>
@@ -512,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/25/线程终止/" rel="next" title="线程终止">
-                <i class="fa fa-chevron-left"></i> 线程终止
+              <a href="/2019/02/28/CAP和BASE理论/" rel="next" title="CAP和BASE理论">
+                <i class="fa fa-chevron-left"></i> CAP和BASE理论
               </a>
             
           </div>
@@ -522,8 +503,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/26/dubbo异常过滤/" rel="prev" title="dubbo异常过滤">
-                dubbo异常过滤 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/04/数据库面试要点/" rel="prev" title="数据库面试要点">
+                数据库面试要点 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -676,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU缓存"><span class="nav-number">1.</span> <span class="nav-text">CPU缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存同步协议"><span class="nav-number">2.</span> <span class="nav-text">缓存同步协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时指令重排"><span class="nav-number">3.</span> <span class="nav-text">运行时指令重排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存屏障"><span class="nav-number">4.</span> <span class="nav-text">内存屏障</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保证可见性的几个场景"><span class="nav-number">5.</span> <span class="nav-text">保证可见性的几个场景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mark-word"><span class="nav-number">1.</span> <span class="nav-text">mark word</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized从偏向锁到重量级锁"><span class="nav-number">2.</span> <span class="nav-text">synchronized从偏向锁到重量级锁</span></a></li></ol></div>
             
 
           </div>
