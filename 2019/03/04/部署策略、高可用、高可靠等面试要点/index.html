@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="多种部署策略，实现高可用、高可靠的方案。">
+<meta name="keywords" content="面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署策略、高可用、高可靠等面试要点">
+<meta property="og:url" content="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/index.html">
+<meta property="og:site_name" content="Tosim学习折腾笔记">
+<meta property="og:description" content="多种部署策略，实现高可用、高可靠的方案。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/dns轮询.png">
+<meta property="og:image" content="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/keepalived架构.jpg">
+<meta property="og:image" content="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/lvs-f5架构.jpg">
+<meta property="og:image" content="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/一致性hash.png">
+<meta property="og:updated_time" content="2019-05-14T16:39:27.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="部署策略、高可用、高可靠等面试要点">
+<meta name="twitter:description" content="多种部署策略，实现高可用、高可靠的方案。">
+<meta name="twitter:image" content="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/dns轮询.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tosim学习折腾笔记" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>部署策略、高可用、高可靠等面试要点 | Tosim学习折腾笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tosim学习折腾笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Day day up.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tosim">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tosim学习折腾笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">部署策略、高可用、高可靠等面试要点
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 15:33:04" itemprop="dateCreated datePublished" datetime="2019-03-04T15:33:04+08:00">2019-03-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-15 00:39:27" itemprop="dateModified" datetime="2019-05-15T00:39:27+08:00">2019-05-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/运维/" itemprop="url" rel="index"><span itemprop="name">运维</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>多种部署策略，实现高可用、高可靠的方案。<br><a id="more"></a></p>
+<h2 id="应用部署策略"><a href="#应用部署策略" class="headerlink" title="应用部署策略"></a>应用部署策略</h2><h3 id="1-dns轮询"><a href="#1-dns轮询" class="headerlink" title="1. dns轮询"></a>1. dns轮询</h3><img src="/2019/03/04/部署策略、高可用、高可靠等面试要点/dns轮询.png">
+<p><strong>架构：</strong><br>域名注册时对同一域名添加多条A记录,实现DNS轮询,DNS服务器将解析请求按照记录的顺序,随机分配到不同的IP上,实现简单的负载均衡 </p>
+<p><strong>优点：</strong><br>1）零成本：在DNS-server上多配几个ip即可，功能也不收费<br>2）部署简单：多部署几个web-server即可，原系统架构不需要做任何改造<br>3）负载均衡：变成了多机，但负载基本是均衡的</p>
+<p><strong>缺点：</strong><br>1）非高可用：DNS-server只负责域名解析ip，这个ip对应的服务是否可用，DNS-server是不保证的，假设有一个web-server挂了，部分服务会受到影响<br>2）扩容非实时：DNS解析有一个生效周期<br>3）暴露了太多的外网ip</p>
+<h3 id="2-nginx反向代理"><a href="#2-nginx反向代理" class="headerlink" title="2. nginx反向代理"></a>2. nginx反向代理</h3><p><strong>架构：</strong><br>nginx将请求转发到各个tomcat服务器上<br><strong>优点：</strong><br>1）DNS-server不需要动<br>2）负载均衡：通过nginx来保证<br>3）只暴露一个外网ip，nginx-&gt;tomcat之间使用内网访问<br>4）扩容实时：nginx内部可控，随时增加web-server随时实时扩容<br>5）能够保证站点层的可用性：任何一台tomcat挂了，nginx可以将流量迁移到其他tomcat</p>
+<p><strong>缺点：</strong><br>1）时延增加+架构更复杂了：中间多加了一个反向代理层<br>2）反向代理层成了单点，非高可用：tomcat挂了不影响服务，nginx挂了怎么办？</p>
+<h3 id="3-keepalived"><a href="#3-keepalived" class="headerlink" title="3. keepalived"></a>3. keepalived</h3><img src="/2019/03/04/部署策略、高可用、高可靠等面试要点/keepalived架构.jpg">
+<p><strong>架构：</strong><br>1）做两台nginx组成一个集群，分别部署上keepalived，设置成相同的虚IP，保证nginx的高可用<br>2）当一台nginx挂了，keepalived能够探测到，并将流量自动迁移到另一台nginx上，整个过程对调用方透明<br><strong>优点：</strong><br>1）解决了高可靠的问题</p>
+<p><strong>缺点：</strong><br>1）资源利用率只有50%<br>2）nginx仍然是接入单点，吞吐量上限为单个nginx性能上限</p>
+<h3 id="4-lvs-f5"><a href="#4-lvs-f5" class="headerlink" title="4. lvs/f5"></a>4. lvs/f5</h3><p>lvs实施在操作系统层面；f5实施在硬件层面；<br><img src="/2019/03/04/部署策略、高可用、高可靠等面试要点/lvs-f5架构.jpg"><br><strong>架构：</strong><br>1）通过lvs来扩展多个nginx<br>2）通过keepalived+VIP的方案可以保证可用性</p>
+<p>不管是使用lvs还是f5，这些都是纵向扩展的方案，根本上，lvs/f5还是会有性能上限，假设每秒能处理10w的请求，一天也只能处理80亿的请求（10w秒吞吐量 * 8w秒），那万一系统的日PV超过80亿怎么办呢？（好吧，没几个公司要考虑这个问题）</p>
+<h3 id="5-横向拓展方案-DNS轮询"><a href="#5-横向拓展方案-DNS轮询" class="headerlink" title="5. 横向拓展方案(DNS轮询)"></a>5. 横向拓展方案(DNS轮询)</h3><p><strong>架构：</strong><br>1）通过DNS轮询来线性扩展入口lvs层的性能<br>2）通过keepalived来保证高可用<br>3）通过lvs来扩展多个nginx<br>4）通过nginx来做负载均衡，业务七层路由</p>
+<h2 id="中间件高可用、高可靠部署的方案"><a href="#中间件高可用、高可靠部署的方案" class="headerlink" title="中间件高可用、高可靠部署的方案"></a>中间件高可用、高可靠部署的方案</h2><h3 id="高可靠方案-故障切换-主从方式"><a href="#高可靠方案-故障切换-主从方式" class="headerlink" title="高可靠方案(故障切换, 主从方式)"></a>高可靠方案(故障切换, 主从方式)</h3><ul>
+<li>共享文件系统, 数据库</li>
+<li>主从同步</li>
+</ul>
+<h3 id="高可用方案-提高系统吞吐量"><a href="#高可用方案-提高系统吞吐量" class="headerlink" title="高可用方案(提高系统吞吐量)"></a>高可用方案(提高系统吞吐量)</h3><ul>
+<li>将数据分散到多个节点, 节点间通过转发请求实现每个节点都能提供集群的数据</li>
+</ul>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><h3 id="一致性hash"><a href="#一致性hash" class="headerlink" title="一致性hash"></a>一致性hash</h3><img src="/2019/03/04/部署策略、高可用、高可靠等面试要点/一致性hash.png">
+<p>用户请求时,hash(user_id) 找到hash环顺时针最近的一个服务器请求</p>
+<p><strong><em>问题</em></strong><br>负载分布不均匀时,增加虚拟节点或设计hash(ip)尽可能均匀的hash算法</p>
+<p>优点:<br>当服务器集群增加或下线节点时,不会导致大规模用户负载变掉,只会使部分用户的负载变掉</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/04/数据库面试要点/" rel="next" title="数据库面试要点">
+                <i class="fa fa-chevron-left"></i> 数据库面试要点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/04/多线程并发面试要点/" rel="prev" title="多线程并发面试要点">
+                多线程并发面试要点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tosim</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用部署策略"><span class="nav-number">1.</span> <span class="nav-text">应用部署策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-dns轮询"><span class="nav-number">1.1.</span> <span class="nav-text">1. dns轮询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-nginx反向代理"><span class="nav-number">1.2.</span> <span class="nav-text">2. nginx反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-keepalived"><span class="nav-number">1.3.</span> <span class="nav-text">3. keepalived</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-lvs-f5"><span class="nav-number">1.4.</span> <span class="nav-text">4. lvs/f5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-横向拓展方案-DNS轮询"><span class="nav-number">1.5.</span> <span class="nav-text">5. 横向拓展方案(DNS轮询)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件高可用、高可靠部署的方案"><span class="nav-number">2.</span> <span class="nav-text">中间件高可用、高可靠部署的方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高可靠方案-故障切换-主从方式"><span class="nav-number">2.1.</span> <span class="nav-text">高可靠方案(故障切换, 主从方式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用方案-提高系统吞吐量"><span class="nav-number">2.2.</span> <span class="nav-text">高可用方案(提高系统吞吐量)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡"><span class="nav-number">3.</span> <span class="nav-text">负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash"><span class="nav-number">3.1.</span> <span class="nav-text">一致性hash</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tosim</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
