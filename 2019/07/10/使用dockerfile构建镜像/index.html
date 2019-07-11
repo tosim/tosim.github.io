@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="使用dockerfile构建镜像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用dockerfile构建镜像">
+<meta property="og:url" content="http://tosim.github.io/2019/07/10/使用dockerfile构建镜像/index.html">
+<meta property="og:site_name" content="Tosim学习折腾笔记">
+<meta property="og:description" content="使用dockerfile构建镜像">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-10T09:12:16.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用dockerfile构建镜像">
+<meta name="twitter:description" content="使用dockerfile构建镜像">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tosim学习折腾笔记" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://tosim.github.io/2019/07/10/使用dockerfile构建镜像/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用dockerfile构建镜像 | Tosim学习折腾笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tosim学习折腾笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Day day up.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/07/10/使用dockerfile构建镜像/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tosim">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tosim学习折腾笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用dockerfile构建镜像
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-10 11:51:58 / 修改时间：17:12:16" itemprop="dateCreated datePublished" datetime="2019-07-10T11:51:58+08:00">2019-07-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用dockerfile构建镜像<br><a id="more"></a></p>
+<h2 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h2><p>选择基础镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM:scratch,虚拟基础镜像，空白</span><br></pre></td></tr></table></figure></p>
+<h2 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h2><p>执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// shell格式</span><br><span class="line">RUN echo &quot;hello world&quot;</span><br><span class="line">// exec格式</span><br><span class="line">RUN exec tar -zxvf redis.tar.gz -C /usr/src/redis --strip-components=1</span><br></pre></td></tr></table></figure></p>
+<p>每一个RUN都是启动一个容器、执行命令、然后提交存储层文件变更，所以每次执行一个命令后其上下文环境(比如当前所在目录)都会初始化.</p>
+<h2 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COPY &lt;源路径&gt;... &lt;镜像内目标路径&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h2><p>在COPY基础上增加了一些功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD &lt;源路径&gt;... &lt;镜像内目标路径&gt;</span><br></pre></td></tr></table></figure></p>
+<p>源路径可以是url，有自动解压缩的场合使用ADD，文件复制使用COPY</p>
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><p>当docker run时没有指定运行的命令时，CMD将会被执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// shell格式</span><br><span class="line">CMD &lt;命令&gt;</span><br><span class="line">// exec格式</span><br><span class="line">CMD [可执行文件, &quot;参数1&quot;, &quot;参数2&quot;]</span><br><span class="line">// 参数列表格式，在指定了ENTRYPOINT指令后，用CMD指定具体的参数</span><br><span class="line">CMD [&quot;参数1&quot;, &quot;参数2&quot;]</span><br></pre></td></tr></table></figure></p>
+<h2 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h2><p>通过docker run –entrypoint来指定<br>当指定了ENTRYPOINT后，CMD的含义就发生了改变，不再是直接运行其命令，而是将CMD的内容作为参数传给ENTRYPOINT指令，即<entrypoint> “<cmd>“</cmd></entrypoint></p>
+<h2 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h2><p>设置环境变量, 后续的指令和运行时的应用，都可以直接用$NAME 来使用这个环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key1&gt;=&lt;value1&gt; &lt;key2&gt;=&lt;value2&gt;</span><br></pre></td></tr></table></figure></p>
+<p>支持的命令：ADD, COPY, ENV, EXPOSE, LABEL, USER, WORKDIR, VOLUME, STOPSIGNAL, ONBUILD</p>
+<h2 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h2><p>构建参数，与ENV相同，但是容器运行时应用中无法使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ARG &lt;参数名&gt;[=&lt;默认值&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>默认值可以在构建命令docker build中用–build-arg &lt;参数名&gt;=&lt;值&gt;来覆盖</p>
+<h2 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h2><p>定义匿名卷，动态数据不应写入容器存储层（将容器导出为镜像时，不需要这些动态数据），动态数据应写入到数据卷中，容器存储层应该是无状态的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VOLUME /data</span><br></pre></td></tr></table></figure></p>
+<p>运行容器时可以覆盖这个挂载设置，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -v ./mydata:/data xxxx</span><br></pre></td></tr></table></figure></p>
+<h2 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]</span><br></pre></td></tr></table></figure>
+<p>声明容器内端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务,需要应用自己开启。</p>
+<ol>
+<li>帮助镜像使用者理解这个镜像服务的守护端口，方便配置映射</li>
+<li>在使用随机端口映射(docker run -P)时，会自动随机映射EXPOSE的端口</li>
+</ol>
+<h2 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h2><p>指定工作目录（或者称为当前目录），以后镜像各层的但前目录就被改为指定的目录，如该目录不存在，则WORKDIR会帮你建立该目录</p>
+<h2 id="USER"><a href="#USER" class="headerlink" title="USER"></a>USER</h2><p>指定工作用户，与WORKDIR类似，影响以后各层的构建过程。<br>这个用户必须是事先建立好的，否则无法切换。</p>
+<h2 id="HEALTHCHECK"><a href="#HEALTHCHECK" class="headerlink" title="HEALTHCHECK"></a>HEALTHCHECK</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 设置检查容器健康状况的命令</span><br><span class="line">HEALTHCHECK [选项] CMD &lt;命令&gt;</span><br><span class="line">--interval=&lt;间隔&gt;：两次健康检查的间隔，默认30s</span><br><span class="line">--timeout=&lt;时长&gt;：健康检查命令运行超时时间，如果超过这个时间，本次健康检查就被视为失败，默认30s</span><br><span class="line">--retries=&lt;次数&gt;：当连续失败指定次数后，则容器被视为unhealthy，默认3次</span><br><span class="line"></span><br><span class="line">// 如果基础镜像有健康检查指令，可以先屏蔽掉其健康检查指令</span><br><span class="line">HEALTHCHECK NONE</span><br></pre></td></tr></table></figure>
+<h2 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ONBUILD &lt;其他指令&gt;</span><br></pre></td></tr></table></figure>
+<p>只有当以当前镜像为基础镜像，去构建下一级镜像的时候才会被执行。<br>ONBUILD时为了帮助别人定制自己而准备的</p>
+<h2 id="RUN、CMD和ENTRYPOINT"><a href="#RUN、CMD和ENTRYPOINT" class="headerlink" title="RUN、CMD和ENTRYPOINT"></a>RUN、CMD和ENTRYPOINT</h2><ul>
+<li>使用 RUN 指令安装应用和软件包，构建镜像。</li>
+<li>如果 Docker 镜像的用途是运行应用程序或服务，比如运行一个 MySQL，应该优先使用 Exec 格式的 ENTRYPOINT 指令。CMD 可为 ENTRYPOINT 提供额外的默认参数，同时可利用 docker run 命令行替换默认参数。</li>
+<li>如果想为容器设置默认的启动命令，可使用 CMD 指令。用户可在 docker run 命令行中替换此默认命令。</li>
+</ul>
+<h2 id="其他构建镜像的方式"><a href="#其他构建镜像的方式" class="headerlink" title="其他构建镜像的方式"></a>其他构建镜像的方式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker save nginx | gzip &gt; nginx-latest.tat.gz</span><br><span class="line">$ docker load -i nginx-latest.tar.gz</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/docker命令/" rel="next" title="docker命令">
+                <i class="fa fa-chevron-left"></i> docker命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/10/docker-hub与私有docker-registry/" rel="prev" title="docker-hub与私有docker-registry">
+                docker-hub与私有docker-registry <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tosim</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FROM"><span class="nav-number">1.</span> <span class="nav-text">FROM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RUN"><span class="nav-number">2.</span> <span class="nav-text">RUN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COPY"><span class="nav-number">3.</span> <span class="nav-text">COPY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADD"><span class="nav-number">4.</span> <span class="nav-text">ADD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD"><span class="nav-number">5.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENTRYPOINT"><span class="nav-number">6.</span> <span class="nav-text">ENTRYPOINT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV"><span class="nav-number">7.</span> <span class="nav-text">ENV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARG"><span class="nav-number">8.</span> <span class="nav-text">ARG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VOLUME"><span class="nav-number">9.</span> <span class="nav-text">VOLUME</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPOSE"><span class="nav-number">10.</span> <span class="nav-text">EXPOSE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WORKDIR"><span class="nav-number">11.</span> <span class="nav-text">WORKDIR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#USER"><span class="nav-number">12.</span> <span class="nav-text">USER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEALTHCHECK"><span class="nav-number">13.</span> <span class="nav-text">HEALTHCHECK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ONBUILD"><span class="nav-number">14.</span> <span class="nav-text">ONBUILD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RUN、CMD和ENTRYPOINT"><span class="nav-number">15.</span> <span class="nav-text">RUN、CMD和ENTRYPOINT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他构建镜像的方式"><span class="nav-number">16.</span> <span class="nav-text">其他构建镜像的方式</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tosim</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
