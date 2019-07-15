@@ -42,25 +42,21 @@
 
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
 
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
 
 
 
@@ -73,8 +69,10 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -86,31 +84,33 @@
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
 
-  
-
-
-
 
   <meta property="og:type" content="website">
-<meta property="og:title" content="Tosim学习折腾笔记">
+<meta property="og:title" content="Tosim&#39;s blog">
 <meta property="og:url" content="http://tosim.github.io/page/2/index.html">
-<meta property="og:site_name" content="Tosim学习折腾笔记">
+<meta property="og:site_name" content="Tosim&#39;s blog">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tosim学习折腾笔记">
+<meta name="twitter:title" content="Tosim&#39;s blog">
 
 
 
-  <link rel="alternate" href="/atom.xml" title="Tosim学习折腾笔记" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Tosim's blog" type="application/atom+xml">
 
 
 
-
+  
+  
   <link rel="canonical" href="http://tosim.github.io/page/2/">
 
 
@@ -121,7 +121,7 @@
   };
 </script>
 
-  <title>Tosim学习折腾笔记</title>
+  <title>Tosim's blog</title>
   
 
 
@@ -181,13 +181,13 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Tosim学习折腾笔记</span>
+        <span class="site-title">Tosim's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
     
       
-        <p class="site-subtitle">Day day up.</p>
+        <p class="site-subtitle">I am so simple.</p>
       
     
     
@@ -216,7 +216,6 @@
 
     
     
-    
       
     
 
@@ -231,7 +230,6 @@
           
           <li class="menu-item menu-item-categories">
 
-    
     
     
       
@@ -250,7 +248,6 @@
 
     
     
-    
       
     
 
@@ -267,7 +264,6 @@
 
     
     
-    
       
     
 
@@ -282,7 +278,6 @@
           
           <li class="menu-item menu-item-about">
 
-    
     
     
       
@@ -306,10 +301,6 @@
 
   
 </nav>
-
-
-
-  
 
 
 
@@ -342,16 +333,378 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/04/数据库面试要点/">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/04/多线程并发面试要点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/04/多线程并发面试要点/" class="post-title-link" itemprop="url">多线程并发面试要点</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 15:48:23" itemprop="dateCreated datePublished" datetime="2019-03-04T15:48:23+08:00">2019-03-04</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-05 10:21:32" itemprop="dateModified" datetime="2019-03-05T10:21:32+08:00">2019-03-05</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>摘要…<br><br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/04/多线程并发面试要点/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/04/部署策略、高可用、高可靠等面试要点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tosim">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tosim's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/04/部署策略、高可用、高可靠等面试要点/" class="post-title-link" itemprop="url">部署策略、高可用、高可靠等面试要点</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 15:33:04" itemprop="dateCreated datePublished" datetime="2019-03-04T15:33:04+08:00">2019-03-04</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-15 00:39:27" itemprop="dateModified" datetime="2019-05-15T00:39:27+08:00">2019-05-15</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/运维/" itemprop="url" rel="index"><span itemprop="name">运维</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>多种部署策略，实现高可用、高可靠的方案。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/04/部署策略、高可用、高可靠等面试要点/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/04/数据库面试要点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tosim">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -369,13 +722,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -388,16 +741,14 @@
               
 
               <time title="创建时间：2019-03-04 14:49:39" itemprop="dateCreated datePublished" datetime="2019-03-04T14:49:39+08:00">2019-03-04</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -405,15 +756,12 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2019-03-06 19:18:33" itemprop="dateModified" datetime="2019-03-06T19:18:33+08:00">2019-03-06</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -437,6 +785,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -470,6 +823,8 @@
         
       
     </p></div>
+
+    
 
     
 
@@ -524,13 +879,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/03/01/synchroniezd锁优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -548,13 +903,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -567,20 +922,17 @@
               
 
               <time title="创建时间：2019-03-01 14:23:14 / 修改时间：14:54:33" itemprop="dateCreated datePublished" datetime="2019-03-01T14:23:14+08:00">2019-03-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
+            </span>
+          
 
           
-            <span class="post-category">
             
-              <span class="post-meta-divider">|</span>
+
             
+          
+
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -604,6 +956,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -637,6 +994,8 @@
         
       
     </p></div>
+
+    
 
     
 
@@ -691,13 +1050,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/28/CAP和BASE理论/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -715,13 +1074,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -734,20 +1093,17 @@
               
 
               <time title="创建时间：2019-02-28 15:21:19 / 修改时间：15:23:49" itemprop="dateCreated datePublished" datetime="2019-02-28T15:21:19+08:00">2019-02-28</time>
-            
-
-            
-              
-
-              
-            
-          </span>
+            </span>
+          
 
           
-            <span class="post-category">
             
-              <span class="post-meta-divider">|</span>
+
             
+          
+
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -771,6 +1127,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -804,6 +1165,8 @@
         
       
     </p></div>
+
+    
 
     
 
@@ -858,13 +1221,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/28/log4j2-xml生产级配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -882,13 +1245,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -901,20 +1264,17 @@
               
 
               <time title="创建时间：2019-02-28 13:59:25 / 修改时间：14:02:42" itemprop="dateCreated datePublished" datetime="2019-02-28T13:59:25+08:00">2019-02-28</time>
-            
-
-            
-              
-
-              
-            
-          </span>
+            </span>
+          
 
           
-            <span class="post-category">
             
-              <span class="post-meta-divider">|</span>
+
             
+          
+
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -938,6 +1298,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -971,6 +1336,8 @@
         
       
     </p></div>
+
+    
 
     
 
@@ -1025,13 +1392,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/26/开发必知的几个开源协议/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -1049,13 +1416,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1068,16 +1435,14 @@
               
 
               <time title="创建时间：2019-02-26 13:30:19" itemprop="dateCreated datePublished" datetime="2019-02-26T13:30:19+08:00">2019-02-26</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1085,15 +1450,12 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2019-03-04 15:25:54" itemprop="dateModified" datetime="2019-03-04T15:25:54+08:00">2019-03-04</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1117,6 +1479,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1151,6 +1518,8 @@
         
       
     </p></div>
+
+    
 
     
 
@@ -1205,13 +1574,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/26/dubbo异常过滤/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -1229,13 +1598,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1248,16 +1617,14 @@
               
 
               <time title="创建时间：2019-02-26 12:23:05" itemprop="dateCreated datePublished" datetime="2019-02-26T12:23:05+08:00">2019-02-26</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1265,15 +1632,12 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2019-03-04 15:25:36" itemprop="dateModified" datetime="2019-03-04T15:25:36+08:00">2019-03-04</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1297,6 +1661,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1330,6 +1699,8 @@
         
       
     </p></div>
+
+    
 
     
 
@@ -1384,13 +1755,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/25/内存屏障和CPU缓存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -1408,13 +1779,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1427,16 +1798,14 @@
               
 
               <time title="创建时间：2019-02-25 22:19:36" itemprop="dateCreated datePublished" datetime="2019-02-25T22:19:36+08:00">2019-02-25</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1444,15 +1813,12 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2019-03-01 14:06:36" itemprop="dateModified" datetime="2019-03-01T14:06:36+08:00">2019-03-01</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1476,6 +1842,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1509,6 +1880,8 @@
         
       
     </div>
+
+    
 
     
 
@@ -1563,13 +1936,13 @@
     <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/25/线程终止/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
+      <meta itemprop="name" content="Tosim">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
+      <meta itemprop="name" content="Tosim's blog">
     </span>
 
     
@@ -1587,13 +1960,13 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
 
-            
-            
-            
+          
+          
+          
 
-            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1606,16 +1979,14 @@
               
 
               <time title="创建时间：2019-02-25 22:11:09" itemprop="dateCreated datePublished" datetime="2019-02-25T22:11:09+08:00">2019-02-25</time>
+            </span>
+          
+
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1623,15 +1994,12 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2019-03-04 15:24:55" itemprop="dateModified" datetime="2019-03-04T15:24:55+08:00">2019-03-04</time>
-              
+              </span>
             
-          </span>
+          
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1655,6 +2023,11 @@
           
           
 
+          
+
+          
+
+          <br>
           
 
           
@@ -1690,362 +2063,6 @@
     </p></div>
 
     
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/25/线程状态/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/25/线程状态/" class="post-title-link" itemprop="url">线程状态</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-25 22:02:38" itemprop="dateCreated datePublished" datetime="2019-02-25T22:02:38+08:00">2019-02-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-05 09:40:44" itemprop="dateModified" datetime="2019-03-05T09:40:44+08:00">2019-03-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>java 线程状态常量<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/25/线程状态/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/02/25/java程序运行原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tosim">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tosim学习折腾笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/25/java程序运行原理/" class="post-title-link" itemprop="url">java程序运行原理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-25 21:35:07" itemprop="dateCreated datePublished" datetime="2019-02-25T21:35:07+08:00">2019-02-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-05 09:58:46" itemprop="dateModified" datetime="2019-03-05T09:58:46+08:00">2019-03-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>java程序运行原理, class文件内容，JVM运行时数据区域<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/25/java程序运行原理/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
 
     
 
@@ -2086,7 +2103,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2117,8 +2134,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">tosim</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-author-name" itemprop="name">Tosim</p>
+              <div class="site-description motion-element" itemprop="description"></div>
           </div>
 
           
@@ -2128,7 +2145,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2138,7 +2155,11 @@
                 
                 
                 <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
                     
                     
                       
@@ -2171,7 +2192,11 @@
                 
                 
                 <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
                     
                     
                       
@@ -2206,13 +2231,11 @@
           
 
           
+
+          
           
 
           
-            
-          
-          
-
         </div>
       </div>
 
@@ -2222,7 +2245,7 @@
 
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
         
@@ -2235,7 +2258,7 @@
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">tosim</span>
+  <span class="author" itemprop="copyrightHolder">Tosim</span>
 
   
 
@@ -2251,7 +2274,7 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
 
 
 
@@ -2279,8 +2302,6 @@
     
 
     
-
-    
   </div>
 
   
@@ -2300,9 +2321,8 @@
 
 
 
-
-
-
+  
+  
 
 
 
@@ -2317,7 +2337,7 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
 
   
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -2326,46 +2346,42 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
-  
 
 
-  <script src="/js/src/utils.js?v=7.0.0"></script>
+  <script src="/js/utils.js?v=7.2.0"></script>
 
-  <script src="/js/src/motion.js?v=7.0.0"></script>
+  <script src="/js/motion.js?v=7.2.0"></script>
 
-
-
-  
-  
-
-
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
-
-
-
-  
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
 
 
   
   
 
 
-
-  
-
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
 
 
 
   
 
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
   
 
   
+
+  
+
+  
+
+  
+
+
+
+  
+
+
+
 
   
 
@@ -2384,6 +2400,15 @@
   
 
   
+
+  
+
+  
+
+  
+
+  
+
 
   
 
