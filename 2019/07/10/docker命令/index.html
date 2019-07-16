@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Tosim&#39;s blog">
 <meta property="og:description" content="docker命令">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-15T02:57:53.230Z">
+<meta property="og:updated_time" content="2019-07-16T02:07:21.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker命令">
 <meta name="twitter:description" content="docker命令">
@@ -395,7 +395,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-15 10:57:53" itemprop="dateModified" datetime="2019-07-15T10:57:53+08:00">2019-07-15</time>
+                <time title="修改时间：2019-07-16 10:07:21" itemprop="dateModified" datetime="2019-07-16T10:07:21+08:00">2019-07-16</time>
               </span>
             
           
@@ -451,20 +451,7 @@
       
         <p>docker命令<br><a id="more"></a></p>
 <h2 id="镜像命令"><a href="#镜像命令" class="headerlink" title="镜像命令"></a>镜像命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 从docker registry拉取镜像</span><br><span class="line">$ docker pull [option] [docker registry ip:port/] repository[:tag]</span><br><span class="line"></span><br><span class="line">// 列出本地的镜像列表</span><br><span class="line">$ docker image ls</span><br><span class="line"></span><br><span class="line">// 删除本地镜像</span><br><span class="line">$ docker image rm [option] &lt;image1&gt; [&lt;image2&gt;...] </span><br><span class="line"></span><br><span class="line">// 批量删除本地镜像</span><br><span class="line">$ docker image rm $(docker image ls -q -f before=ubuntu:16.04)</span><br><span class="line"></span><br><span class="line">// 查看镜像，容器，数据卷占用的空间</span><br><span class="line">$ docker system df</span><br><span class="line"></span><br><span class="line">// 显示虚悬镜像(repository和tag都为none的镜像)</span><br><span class="line">$ docker image ls -f dangling=true</span><br><span class="line"></span><br><span class="line">// 删除虚悬镜像</span><br><span class="line">$ docker image prune</span><br><span class="line"></span><br><span class="line">// 重命名镜像</span><br><span class="line">$ docker tag &lt;imageId&gt; &lt;newImageName&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><p>// docker run 命令及选项<br>$ docker run [option] repository:tag [commond] </p>
-<p>-d：后台运行<br>-i：交互式操作，让容器的标准输入打开<br>-t：打开一个伪终端，绑定到容器<br>–name：指定容器的名字<br>-p：-p ip:hostPort:containerPort[/udp], 将宿主机的端口绑定容器内端口<br>-P：-P，将宿主机49000～49900的随机端口映射到容器镜像EXPOSE中指定开放的端口<br>-v：指定宿主机的目录挂载容器镜像VOLUME指定的匿名卷，用于存储动态数据<br>–network：bridge桥接，host与宿主机一致的网络，none<br>–network-alias：为–network指定的网络取别名</p>
-<p>// 进入到运行时的容器中<br>$ docker exec -it <container> /bin/bash</container></p>
-<p>// 导出容器为镜像<br>$ docker export <container> &gt; <exportname></exportname></container></p>
-<p>// 导入容器为镜像<br>$ docker import <exportname> <imagename><br>$ cat <exportname> | docker import - <imagename><br>$ docker import <url> <imagename></imagename></url></imagename></exportname></imagename></exportname></p>
-<p>// 启动容器并执行命令<br>$ docker run ubuntu:16.04 /bin/bash “hello world”</p>
-<p>// 根据ubuntu:16.04来启动一个容器<br>$ docker run -it –rm ubuntu:16.04 /bin/bash</p>
-<p>-it：这是两个参数，-i：交互式操作，让容器的标准输入保持打开，-t：打开一个终端绑定到容器上<br>–rm：容器退出后删除这个容器<br>bash：容器启动后执行的命令，这里是开启一个交互式的shell</p>
-<p>// 终止容器<br>$ docker container stop <container></container></p>
-<p>// 查看终止状态的容器<br>$ docker container ls -a</p>
-<p>// 启动已终止的容器<br>$ docker container start<br>$ docker start</p>
-<p>// 重新启动正在运行的容器<br>$ docker container restart</p>
-<p>// 删除容器<br>$ docker container rm <container><br>$ docker rm -f <container></container></container></p>
-<p>// 删除所有处于终止状态的容器<br>$ docker container prune</p>
+<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">// docker run 命令及选项</span><br><span class="line">$ docker run [option] repository:tag [commond] </span><br><span class="line"></span><br><span class="line">-d：后台运行</span><br><span class="line">-i：交互式操作，让容器的标准输入打开</span><br><span class="line">-t：打开一个伪终端，绑定到容器</span><br><span class="line">--name：指定容器的名字</span><br><span class="line">-p：-p ip:hostPort:containerPort[/udp], 将宿主机的端口绑定容器内端口</span><br><span class="line">-P：-P，将宿主机49000～49900的随机端口映射到容器镜像EXPOSE中指定开放的端口</span><br><span class="line">-v：指定宿主机的目录挂载容器镜像VOLUME指定的匿名卷，用于存储动态数据</span><br><span class="line">--network：bridge桥接，host与宿主机一致的网络，none</span><br><span class="line">--network-alias：为--network指定的网络取别名</span><br><span class="line"></span><br><span class="line">// 进入到运行时的容器中</span><br><span class="line">$ docker exec -it &lt;container&gt; /bin/bash</span><br><span class="line"></span><br><span class="line">// 导出容器为镜像</span><br><span class="line">$ docker export &lt;container&gt; &gt; &lt;exportName&gt;</span><br><span class="line"></span><br><span class="line">// 导入容器为镜像</span><br><span class="line">$ docker import &lt;exportName&gt; &lt;imageName&gt;</span><br><span class="line">$ cat &lt;exportName&gt; | docker import - &lt;imageName&gt;</span><br><span class="line">$ docker import &lt;url&gt; &lt;imageName&gt;</span><br><span class="line"></span><br><span class="line">// 启动容器并执行命令</span><br><span class="line">$ docker run ubuntu:16.04 /bin/bash &quot;hello world&quot;</span><br><span class="line"></span><br><span class="line">// 根据ubuntu:16.04来启动一个容器</span><br><span class="line">$ docker run -it --rm ubuntu:16.04 /bin/bash</span><br><span class="line"></span><br><span class="line">-it：这是两个参数，-i：交互式操作，让容器的标准输入保持打开，-t：打开一个终端绑定到容器上</span><br><span class="line">--rm：容器退出后删除这个容器</span><br><span class="line">bash：容器启动后执行的命令，这里是开启一个交互式的shell</span><br><span class="line"></span><br><span class="line">// 终止容器</span><br><span class="line">$ docker container stop &lt;container&gt;</span><br><span class="line"></span><br><span class="line">// 查看终止状态的容器</span><br><span class="line">$ docker container ls -a</span><br><span class="line"></span><br><span class="line">// 启动已终止的容器</span><br><span class="line">$ docker container start</span><br><span class="line">$ docker start</span><br><span class="line"></span><br><span class="line">// 重新启动正在运行的容器</span><br><span class="line">$ docker container restart</span><br><span class="line"></span><br><span class="line">// 删除容器</span><br><span class="line">$ docker container rm &lt;container&gt;</span><br><span class="line">$ docker rm -f &lt;container&gt;</span><br><span class="line"></span><br><span class="line">// 删除所有处于终止状态的容器</span><br><span class="line">$ docker container prune</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -591,7 +578,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -634,13 +621,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -669,7 +650,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
