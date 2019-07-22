@@ -95,18 +95,18 @@
 
 
 
-  <meta name="description" content="docker命令">
-<meta name="keywords" content="docker">
+  <meta name="description" content="正则表达式相关注意点。">
+<meta name="keywords" content="regexp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker命令">
-<meta property="og:url" content="http://tosim.github.io/2019/07/10/docker命令/index.html">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://tosim.github.io/2019/07/22/正则表达式/index.html">
 <meta property="og:site_name" content="Tosim&#39;s blog">
-<meta property="og:description" content="docker命令">
+<meta property="og:description" content="正则表达式相关注意点。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-16T02:07:21.330Z">
+<meta property="og:updated_time" content="2019-07-22T06:04:11.257Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker命令">
-<meta name="twitter:description" content="docker命令">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="正则表达式相关注意点。">
 
 
 
@@ -116,7 +116,7 @@
 
   
   
-  <link rel="canonical" href="http://tosim.github.io/2019/07/10/docker命令/">
+  <link rel="canonical" href="http://tosim.github.io/2019/07/22/正则表达式/">
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>docker命令 | Tosim's blog</title>
+  <title>正则表达式 | Tosim's blog</title>
   
 
 
@@ -337,7 +337,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/07/10/docker命令/">
+    <link itemprop="mainEntityOfPage" href="http://tosim.github.io/2019/07/22/正则表达式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tosim">
@@ -354,7 +354,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">docker命令
+          <h1 class="post-title" itemprop="name headline">正则表达式
 
               
             
@@ -380,23 +380,13 @@
                 
               
 
-              <time title="创建时间：2019-07-10 10:36:58" itemprop="dateCreated datePublished" datetime="2019-07-10T10:36:58+08:00">2019-07-10</time>
+              <time title="创建时间：2019-07-22 12:18:11 / 修改时间：14:04:11" itemprop="dateCreated datePublished" datetime="2019-07-22T12:18:11+08:00">2019-07-22</time>
             </span>
           
 
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-16 10:07:21" itemprop="dateModified" datetime="2019-07-16T10:07:21+08:00">2019-07-16</time>
-              </span>
             
           
 
@@ -409,7 +399,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/regexp/" itemprop="url" rel="index"><span itemprop="name">regexp</span></a></span>
 
                 
                 
@@ -449,10 +439,37 @@
       
 
       
-        <p>docker命令<br><a id="more"></a></p>
-<h2 id="镜像命令"><a href="#镜像命令" class="headerlink" title="镜像命令"></a>镜像命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 从docker registry拉取镜像</span><br><span class="line">$ docker pull [option] [docker registry ip:port/] repository[:tag]</span><br><span class="line"></span><br><span class="line">// 列出本地的镜像列表</span><br><span class="line">$ docker image ls</span><br><span class="line"></span><br><span class="line">// 删除本地镜像</span><br><span class="line">$ docker image rm [option] &lt;image1&gt; [&lt;image2&gt;...] </span><br><span class="line"></span><br><span class="line">// 批量删除本地镜像</span><br><span class="line">$ docker image rm $(docker image ls -q -f before=ubuntu:16.04)</span><br><span class="line"></span><br><span class="line">// 查看镜像，容器，数据卷占用的空间</span><br><span class="line">$ docker system df</span><br><span class="line"></span><br><span class="line">// 显示虚悬镜像(repository和tag都为none的镜像)</span><br><span class="line">$ docker image ls -f dangling=true</span><br><span class="line"></span><br><span class="line">// 删除虚悬镜像</span><br><span class="line">$ docker image prune</span><br><span class="line"></span><br><span class="line">// 重命名镜像</span><br><span class="line">$ docker tag &lt;imageId&gt; &lt;newImageName&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">// docker run 命令及选项</span><br><span class="line">$ docker run [option] repository:tag [commond] </span><br><span class="line"></span><br><span class="line">-d：后台运行</span><br><span class="line">-i：交互式操作，让容器的标准输入打开</span><br><span class="line">-t：打开一个伪终端，绑定到容器</span><br><span class="line">--name：指定容器的名字</span><br><span class="line">-p：-p ip:hostPort:containerPort[/udp], 将宿主机的端口绑定容器内端口</span><br><span class="line">-P：-P，将宿主机49000～49900的随机端口映射到容器镜像EXPOSE中指定开放的端口</span><br><span class="line">-v：指定宿主机的目录挂载容器镜像VOLUME指定的匿名卷，用于存储动态数据</span><br><span class="line">--network：bridge桥接，host与宿主机一致的网络，none</span><br><span class="line">--network-alias：为--network指定的网络取别名</span><br><span class="line"></span><br><span class="line">// 进入到运行时的容器中</span><br><span class="line">$ docker exec -it &lt;container&gt; /bin/bash</span><br><span class="line"></span><br><span class="line">// 导出容器为镜像</span><br><span class="line">$ docker export &lt;container&gt; &gt; &lt;exportName&gt;</span><br><span class="line"></span><br><span class="line">// 导入容器为镜像</span><br><span class="line">$ docker import &lt;exportName&gt; &lt;imageName&gt;</span><br><span class="line">$ cat &lt;exportName&gt; | docker import - &lt;imageName&gt;</span><br><span class="line">$ docker import &lt;url&gt; &lt;imageName&gt;</span><br><span class="line"></span><br><span class="line">// 启动容器并执行命令</span><br><span class="line">$ docker run ubuntu:16.04 /bin/bash &quot;hello world&quot;</span><br><span class="line"></span><br><span class="line">// 根据ubuntu:16.04来启动一个容器</span><br><span class="line">$ docker run -it --rm ubuntu:16.04 /bin/bash</span><br><span class="line"></span><br><span class="line">-it：这是两个参数，-i：交互式操作，让容器的标准输入保持打开，-t：打开一个终端绑定到容器上</span><br><span class="line">--rm：容器退出后删除这个容器</span><br><span class="line">bash：容器启动后执行的命令，这里是开启一个交互式的shell</span><br><span class="line"></span><br><span class="line">// 终止容器</span><br><span class="line">$ docker container stop &lt;container&gt;</span><br><span class="line"></span><br><span class="line">// 查看终止状态的容器</span><br><span class="line">$ docker container ls -a</span><br><span class="line"></span><br><span class="line">// 启动已终止的容器</span><br><span class="line">$ docker container start</span><br><span class="line">$ docker start</span><br><span class="line"></span><br><span class="line">// 重新启动正在运行的容器</span><br><span class="line">$ docker container restart</span><br><span class="line"></span><br><span class="line">// 删除容器</span><br><span class="line">$ docker container rm &lt;container&gt;</span><br><span class="line">$ docker rm -f &lt;container&gt;</span><br><span class="line"></span><br><span class="line">// 删除所有处于终止状态的容器</span><br><span class="line">$ docker container prune</span><br></pre></td></tr></table></figure>
+        <p>正则表达式相关注意点。<br><a id="more"></a></p>
+<h2 id="单行模式与多行模式"><a href="#单行模式与多行模式" class="headerlink" title="单行模式与多行模式"></a>单行模式与多行模式</h2><p>单行模式:</p>
+<ul>
+<li>单行模式下.匹配换行符号(windows下\r\n, unix下\n, mac os 下\r)(默认模式下.不匹配换行符)</li>
+<li>通过(?s)或者/s开始单行模式</li>
+</ul>
+<p>多行模式:</p>
+<ul>
+<li>多行模式下^和$为每行的开始和结尾。（\A和\Z始终为整个文本的开始和结尾） </li>
+<li>通过(?m)或者/m开启多行模式</li>
+</ul>
+<h2 id="flags"><a href="#flags" class="headerlink" title="flags"></a>flags</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/g: 全局匹配，没有/g的话只匹配第一个</span><br><span class="line">/m: 开启多行模式</span><br><span class="line">/i: 忽略大小写匹配</span><br></pre></td></tr></table></figure>
+<h2 id="java中用正则表达式替换"><a href="#java中用正则表达式替换" class="headerlink" title="java中用正则表达式替换"></a>java中用正则表达式替换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;+86 12345678901&quot;;</span><br><span class="line">String telephoneRegex = &quot;(\\+\\d&#123;2&#125; )?(\\d&#123;3&#125;)(\\d&#123;4&#125;)(\\d&#123;4&#125;)&quot;;</span><br><span class="line">Pattern telephonePattern = Pattern.compile(telephoneRegex);</span><br><span class="line">Matcher matcher = telephonePattern.matcher(str);</span><br><span class="line">while (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group(1));</span><br><span class="line">    System.out.println(matcher.group(2));</span><br><span class="line">    System.out.println(matcher.group(3));</span><br><span class="line">    System.out.println(matcher.group(4));</span><br><span class="line">&#125;</span><br><span class="line">str = str.replaceAll(telephoneRegex, &quot;$1$2****$4&quot;);</span><br><span class="line">System.out.println(str);</span><br></pre></td></tr></table></figure>
+<!--
+多级分类：
+categories:
+  - [ClassA, ClassA-B]
 
+多个分类：
+categories:
+  - [ClassA]
+  - [ClassB]
+
+多个标签：
+tags:
+  - TagA
+
+使用资源文件夹的图片:
+
+<p>–&gt;</p>
+-->
       
     </div>
 
@@ -482,7 +499,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/docker/" rel="tag"># docker</a>
+            <a href="/tags/regexp/" rel="tag"># regexp</a>
           
         </div>
       
@@ -495,8 +512,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/14/参数调优/" rel="next" title="参数调优">
-                <i class="fa fa-chevron-left"></i> 参数调优
+              <a href="/2019/07/19/copy-on-write技术/" rel="next" title="copy-on-write技术">
+                <i class="fa fa-chevron-left"></i> copy-on-write技术
               </a>
             
           </div>
@@ -504,10 +521,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/10/使用dockerfile构建镜像/" rel="prev" title="使用dockerfile构建镜像">
-                使用dockerfile构建镜像 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -699,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像命令"><span class="nav-number">1.</span> <span class="nav-text">镜像命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器命令"><span class="nav-number">2.</span> <span class="nav-text">容器命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单行模式与多行模式"><span class="nav-number">1.</span> <span class="nav-text">单行模式与多行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flags"><span class="nav-number">2.</span> <span class="nav-text">flags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java中用正则表达式替换"><span class="nav-number">3.</span> <span class="nav-text">java中用正则表达式替换</span></a></li></ol></div>
             
 
           </div>
