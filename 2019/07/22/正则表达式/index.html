@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Tosim&#39;s blog">
 <meta property="og:description" content="正则表达式相关注意点。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-22T06:04:11.257Z">
+<meta property="og:updated_time" content="2019-07-22T06:12:44.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式">
 <meta name="twitter:description" content="正则表达式相关注意点。">
@@ -380,7 +380,7 @@
                 
               
 
-              <time title="创建时间：2019-07-22 12:18:11 / 修改时间：14:04:11" itemprop="dateCreated datePublished" datetime="2019-07-22T12:18:11+08:00">2019-07-22</time>
+              <time title="创建时间：2019-07-22 12:18:11 / 修改时间：14:12:44" itemprop="dateCreated datePublished" datetime="2019-07-22T12:18:11+08:00">2019-07-22</time>
             </span>
           
 
@@ -452,6 +452,7 @@
 </ul>
 <h2 id="flags"><a href="#flags" class="headerlink" title="flags"></a>flags</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/g: 全局匹配，没有/g的话只匹配第一个</span><br><span class="line">/m: 开启多行模式</span><br><span class="line">/i: 忽略大小写匹配</span><br></pre></td></tr></table></figure>
 <h2 id="java中用正则表达式替换"><a href="#java中用正则表达式替换" class="headerlink" title="java中用正则表达式替换"></a>java中用正则表达式替换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;+86 12345678901&quot;;</span><br><span class="line">String telephoneRegex = &quot;(\\+\\d&#123;2&#125; )?(\\d&#123;3&#125;)(\\d&#123;4&#125;)(\\d&#123;4&#125;)&quot;;</span><br><span class="line">Pattern telephonePattern = Pattern.compile(telephoneRegex);</span><br><span class="line">Matcher matcher = telephonePattern.matcher(str);</span><br><span class="line">while (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group(1));</span><br><span class="line">    System.out.println(matcher.group(2));</span><br><span class="line">    System.out.println(matcher.group(3));</span><br><span class="line">    System.out.println(matcher.group(4));</span><br><span class="line">&#125;</span><br><span class="line">str = str.replaceAll(telephoneRegex, &quot;$1$2****$4&quot;);</span><br><span class="line">System.out.println(str);</span><br></pre></td></tr></table></figure>
+<h2 id="js中使用正则表达式"><a href="#js中使用正则表达式" class="headerlink" title="js中使用正则表达式"></a>js中使用正则表达式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var text = &quot;mom and dad and baby&quot;;</span><br><span class="line">var pattern = /mom( and dad( and baby)?)?/gi;</span><br><span class="line">var matches = pattern.exec(text);</span><br><span class="line">console.log(matches.index); //0</span><br><span class="line">console.log(matches.input); //mom and dad and baby</span><br><span class="line">console.log(matches[0]);    //mom and dad and baby</span><br><span class="line">console.log(matches[1]);    //and dad and baby</span><br><span class="line">console.log(matches[2]);    //and baby</span><br></pre></td></tr></table></figure>
 <!--
 多级分类：
 categories:
@@ -712,7 +713,7 @@ tags:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单行模式与多行模式"><span class="nav-number">1.</span> <span class="nav-text">单行模式与多行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flags"><span class="nav-number">2.</span> <span class="nav-text">flags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java中用正则表达式替换"><span class="nav-number">3.</span> <span class="nav-text">java中用正则表达式替换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单行模式与多行模式"><span class="nav-number">1.</span> <span class="nav-text">单行模式与多行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flags"><span class="nav-number">2.</span> <span class="nav-text">flags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java中用正则表达式替换"><span class="nav-number">3.</span> <span class="nav-text">java中用正则表达式替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js中使用正则表达式"><span class="nav-number">4.</span> <span class="nav-text">js中使用正则表达式</span></a></li></ol></div>
             
 
           </div>
